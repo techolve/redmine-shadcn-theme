@@ -1,13 +1,19 @@
 # ローカル確認用の Redmine（SQLite）
 # テーマは themes/shadcn としてマウントする（node_modules などは含めない）
+#
+#   docker compose up -d                       Redmine 6 → http://localhost:3000
+#   docker compose --profile redmine7 up -d    Redmine 7 も起動 → http://localhost:3001
+x-redmine: &redmine
+  environment:
+    REDMINE_SECRET_KEY_BASE: &secret local-dev-secret-key-base-for-theme-development
+    SECRET_KEY_BASE: *secret
+
 services:
   redmine:
+    <<: *redmine
     image: redmine:6
     ports:
       - "3000:3000"
-    environment:
-      REDMINE_SECRET_KEY_BASE: &secret local-dev-secret-key-base-for-theme-development
-      SECRET_KEY_BASE: *secret
     volumes:
       - redmine-files:/usr/src/redmine/files
       - redmine-sqlite:/usr/src/redmine/sqlite
@@ -15,6 +21,21 @@ services:
       - ./javascripts:/usr/src/redmine/themes/shadcn/javascripts:ro
       - ./images:/usr/src/redmine/themes/shadcn/images:ro
 
+  redmine7:
+    <<: *redmine
+    image: redmine:7
+    profiles: [redmine7]
+    ports:
+      - "3001:3000"
+    volumes:
+      - redmine7-files:/usr/src/redmine/files
+      - redmine7-sqlite:/usr/src/redmine/sqlite
+      - ./stylesheets:/usr/src/redmine/themes/shadcn/stylesheets:ro
+      - ./javascripts:/usr/src/redmine/themes/shadcn/javascripts:ro
+      - ./images:/usr/src/redmine/themes/shadcn/images:ro
+
 volumes:
   redmine-files:
   redmine-sqlite:
+  redmine7-files:
+  redmine7-sqlite:

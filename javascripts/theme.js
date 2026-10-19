@@ -69,10 +69,26 @@
     topMenu.insertBefore(button, topMenu.firstChild);
   }
 
+  /* ガントチャートの位置はインライン指定されている。
+   * Redmine 6 は top / left、Redmine 7 は論理プロパティ（inset-block-start / inset-inline-start）なので両方に対応する。
+   */
+  var LOGICAL = { top: 'inset-block-start', left: 'inset-inline-start' };
+
+  function getPos(el, prop) {
+    var value = el.style.getPropertyValue(prop) || el.style.getPropertyValue(LOGICAL[prop]);
+    return parseFloat(value);
+  }
+
+  function setPos(el, prop, px) {
+    var name = el.style.getPropertyValue(LOGICAL[prop]) ? LOGICAL[prop] : prop;
+    el.style.setProperty(name, px + 'px');
+  }
+
   /* ガントチャートの行の高さを広げる
    * Redmine は各要素の top をサーバー側で 20px 刻みにインライン指定しているので、
    * それを GANTT_ROW_HEIGHT 刻みに計算し直す。
-   * 折りたたみ（gantt.js の ganttEntryClick）は data-collapse-expand の top_increment を使うので、それも書き換える。
+   * 折りたたみ（6 は gantt.js の ganttEntryClick、7 は gantt--subjects コントローラー）は
+   * data-collapse-expand の top_increment を使うので、それも書き換える。
    */
   var GANTT_ROW_HEIGHT = 28;
   var GANTT_ORIGINAL_ROW_HEIGHT = 20;
@@ -89,7 +105,7 @@
     var start = Infinity;
     var i;
     for (i = 0; i < subjects.length; i++) {
-      var value = parseFloat(subjects[i].style.top);
+      var value = getPos(subjects[i], 'top');
       if (!isNaN(value) && value < start) start = value;
     }
     if (start === Infinity) return;
@@ -97,9 +113,9 @@
     var scale = GANTT_ROW_HEIGHT / GANTT_ORIGINAL_ROW_HEIGHT;
     for (i = 0; i < rows.length; i++) {
       var el = rows[i];
-      var top = parseFloat(el.style.top);
+      var top = getPos(el, 'top');
       if (!isNaN(top) && top >= start) {
-        el.style.top = (start + (top - start) * scale) + 'px';
+        setPos(el, 'top', start + (top - start) * scale);
       }
       var json = el.getAttribute('data-collapse-expand');
       if (json && json.indexOf('top_increment') !== -1) {
@@ -135,12 +151,12 @@
     var draw = document.getElementById('gantt_draw_area');
     if (!area || !draw) return;
 
-    var items = area.querySelectorAll('[style*="left"], [style*="width"]');
+    var items = area.querySelectorAll('[style*="left"], [style*="inset-inline-start"], [style*="width"]');
     var i, el;
     for (i = 0; i < items.length; i++) {
       el = items[i];
       if (el.hasAttribute('data-shadcn-left')) continue;
-      el.setAttribute('data-shadcn-left', el.style.left);
+      el.setAttribute('data-shadcn-left', getPos(el, 'left'));
       el.setAttribute('data-shadcn-width', el.style.width);
     }
 
@@ -152,17 +168,23 @@
       el = items[i];
       var left = parseFloat(el.getAttribute('data-shadcn-left'));
       var width = parseFloat(el.getAttribute('data-shadcn-width'));
-      if (!isNaN(left)) el.style.left = (left * scale) + 'px';
+      if (!isNaN(left)) setPos(el, 'left', left * scale);
       if (!isNaN(width)) el.style.width = (width * scale) + 'px';
     }
   }
 
   // 関連線・進捗線を新しい位置で描き直す
+  //   Redmine 6: gantt.js の drawGanttHandler()（Raphael の描画エリアのサイズも合わせる）
+  //   Redmine 7: gantt--chart コントローラーが window の resize で描き直す
   function redrawGantt() {
     var draw = document.getElementById('gantt_draw_area');
     if (!draw) return;
-    if (window.draw_gantt) window.draw_gantt.setSize(draw.offsetWidth, draw.offsetHeight);
-    if (typeof window.drawGanttHandler === 'function') window.drawGanttHandler();
+    if (typeof window.drawGanttHandler === 'function') {
+      if (window.draw_gantt) window.draw_gantt.setSize(draw.offsetWidth, draw.offsetHeight);
+      window.drawGanttHandler();
+    } else {
+      window.dispatchEvent(new Event('resize'));
+    }
   }
 
   var fittedWidth = null;
@@ -183,7 +205,11 @@
 
     // gantt.js の初期化（選択した列の表示切り替え）やサイドバーの開閉・ウィンドウのリサイズで
     // 表示領域の幅が変わるので、そのたびに合わせ直す
-    window.addEventListener('load', refitGantt);
+    window.addEventListener('load', function () {
+      refitGantt();
+      // Redmine 7 は Stimulus のコントローラーが load 前後に接続して描画するので、もう一度描き直す
+      redrawGantt();
+    });
     if (window.ResizeObserver) {
       var timer = null;
       new ResizeObserver(function () {

@@ -14,7 +14,7 @@
     "build:css": "tailwindcss -i src/application.css -o stylesheets/application.css",
     "build:icons": "node src/tools/build-icons.mjs",
     "watch": "tailwindcss -i src/application.css -o stylesheets/application.css --watch",
-    "reload": "npm run build && docker compose restart redmine",
+    "reload": "npm run build && docker compose --profile redmine7 restart",
     "package": "npm run build && sh src/tools/package.sh"
   },
   "devDependencies": {

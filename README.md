@@ -6,7 +6,7 @@
 - ライト / ダークモード（OS 設定に追従、トップメニューのボタンで切り替え）
 - アイコンを [Lucide](https://lucide.dev/) に差し替え
 - チケット・ガントチャート・カレンダー・作業時間・ロードマップ・管理画面などに対応
-- 確認バージョン: Redmine 6.1.5
+- 確認バージョン: Redmine 6.1.5 / 7.0.2
 
 ![チケット一覧](.github/screenshots/issues-light.png#gh-light-mode-only)
 ![チケット一覧](.github/screenshots/issues-dark.png#gh-dark-mode-only)
@@ -41,8 +41,9 @@ Redmine を再起動して、`管理` → `設定` → `表示` → `テーマ` 
 
 ```sh
 npm install
-docker compose up -d                       # http://localhost:3000
-docker compose exec -T redmine bundle exec rails runner - < src/tools/seed.rb   # サンプルデータ（admin / admin1234）
+docker compose up -d                       # Redmine 6 → http://localhost:3000
+docker compose --profile redmine7 up -d    # Redmine 7 も起動 → http://localhost:3001
+docker compose exec -T redmine bundle exec rails runner - < src/tools/seed.rb   # サンプルデータ（admin / admin1234）。7 は redmine を redmine7 に
 npm run reload                             # アイコンと CSS をビルドして Redmine を再起動
 npm run package                            # Release 用の zip を .dist/ に作る
 ```
@@ -65,6 +66,7 @@ src/                  ソース一式（Redmine は src/ を配信しない）
   views.css           作業時間・管理画面・エディタ・jQuery UI など
   gantt.css           ガントチャート（ReUI の Gantt を参考にしたデザイン）
   calendar.css        カレンダー（ReUI の Event Calendar を参考にしたデザイン）
+  redmine7.css        Redmine 7 で変わった部品（トップメニュー・アカウントメニューなど）
   dark.css            ダークモードの追加調整・シンタックスハイライト・切り替えボタン
   tools/build-icons.mjs  Redmine のアイコン名 → Lucide の対応表。images/icons.svg を生成
   tools/seed.rb       ローカル確認用のサンプルデータ
@@ -80,7 +82,11 @@ javascripts/theme.js  ダークモード切り替え・ガントの行の高さ�
 
 ### 本体 CSS の読み込み順に注意
 
-`jstoolbar.css` と `context_menu.css` はテーマより後に読み込まれるため、上書きするときは `div#context-menu` のように詳細度を上げています。
+`jstoolbar.css` と `context_menu.css`（Redmine 7 は `dropdown.css` と `gantt.css` も）はテーマより後に読み込まれるため、上書きするときは `div#context-menu` や `#content` を付けて詳細度を上げています。
+
+### ローカルで 6 と 7 を同時に開くとき
+
+ブラウザの Cookie はポート番号を区別しないので、`localhost:3000` と `localhost:3001` に同時にログインするとセッションが衝突します。片方は `127.0.0.1:3001` のように別のホスト名で開いてください。
 
 ## Credits
 

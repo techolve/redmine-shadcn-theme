@@ -3,10 +3,11 @@
  * Redmine のガントは各要素の位置がサーバー側でインライン指定されている。
  *   - 行は 20px 刻み（行の高さ 16px + 余白 4px）
  *   - 1 行目の位置はズーム倍率でヘッダーの高さが変わるので一定ではない
+ * Redmine 7 は gantt.css がテーマより後に読み込まれるので、すべてのセレクタに #content を付けて詳細度を上げている。
  * theme.js が行の間隔を 28px に広げて、1 行目の top を --gantt-row-start、
  * 行の高さを --gantt-row-height に入れる（JS が無効なら 20px 刻みのまま）
  */
-table.gantt-table {
+#content table.gantt-table {
   --gantt-row-start: 44px;
   --gantt-row-height: 20px;
   /* 行の内容（16px）の上の余白。行の上端 = 行の top - この値 */
@@ -22,53 +23,53 @@ table.gantt-table {
   border-collapse: separate;
   border-spacing: 0;
 }
-html.dark table.gantt-table {
+html.dark #content table.gantt-table {
   --gantt-bar: oklch(0.707 0.165 254.624);
   --gantt-bar-todo: color-mix(in oklab, var(--gantt-bar) 25%, var(--card));
   --gantt-summary: color-mix(in oklab, var(--muted-foreground) 35%, var(--card));
 }
-table.gantt-table td {
+#content table.gantt-table td {
   border-color: var(--border);
 }
 
 /* ---------- ヘッダー ---------- */
 /* 本体の HTML に style="background: #eee" が直書きされているので !important で上書きする */
-.gantt_hdr[style*="background"] {
+#content .gantt_hdr[style*="background"] {
   background: color-mix(in oklab, var(--muted) 50%, var(--card)) !important;
 }
-.gantt_hdr,
-#gantt_area .gantt_hdr,
-.gantt_subjects_container:not(.draw_selected_columns) .gantt_hdr,
-.last_gantt_selected_column .gantt_hdr {
+#content .gantt_hdr,
+#content #gantt_area .gantt_hdr,
+#content .gantt_subjects_container:not(.draw_selected_columns) .gantt_hdr,
+#content .last_gantt_selected_column .gantt_hdr {
   border-color: var(--border);
 }
-.gantt_hdr {
+#content .gantt_hdr {
   @apply text-muted-foreground text-xs font-medium;
   /* 一番上の線はカードの枠線と重なるので消す。月と週の間は月のセルの下線で区切る */
   border-top: 0;
 }
-#gantt_area .gantt_hdr a {
+#content #gantt_area .gantt_hdr a {
   @apply text-foreground font-semibold;
 }
-#gantt_area .gantt_hdr a:hover {
+#content #gantt_area .gantt_hdr a:hover {
   @apply no-underline text-link;
 }
-.gantt_hdr.nwday {
+#content .gantt_hdr.nwday {
   background: color-mix(in oklab, var(--muted) 60%, transparent);
   @apply text-muted-foreground;
 }
-.gantt_hdr_selected_column_name {
+#content .gantt_hdr_selected_column_name {
   @apply text-muted-foreground text-xs font-medium;
 }
 
 /* ---------- 行（左のツリー・選択した列・チャート） ---------- */
-#gantt_area {
+#content #gantt_area {
   @apply bg-card;
 }
 /* 行の区切り線: 1 行目の上から行の高さごとに線を引く。ヘッダー部分には引かない */
-#gantt_area,
-.gantt_subjects,
-.gantt_selected_column_content {
+#content #gantt_area,
+#content .gantt_subjects,
+#content .gantt_selected_column_content {
   background-image: repeating-linear-gradient(
     to bottom,
     transparent 0 calc(var(--gantt-row-height) - 1px),
@@ -81,98 +82,98 @@ table.gantt-table td {
   padding-top: calc(var(--gantt-row-start) - var(--gantt-row-padding) + 1px);
   box-sizing: border-box;
 }
-.gantt_subjects,
-.gantt_selected_column_content {
+#content .gantt_subjects,
+#content .gantt_selected_column_content {
   height: 100%;
 }
 
-.gantt_subjects div,
-.gantt_selected_column_content div {
+#content .gantt_subjects div,
+#content .gantt_selected_column_content div {
   @apply text-foreground;
 }
-.gantt_subjects {
+#content .gantt_subjects {
   font-size: 0.8125rem;
 }
 /* 左右に余白を入れる。幅はインライン指定なので padding を含めて収め、はみ出す題名は省略する */
-.gantt_subjects form > div {
+#content .gantt_subjects form > div {
   margin-left: 0.5rem;
   padding-right: 1rem;
   box-sizing: border-box;
   text-overflow: ellipsis;
 }
-.gantt_selected_column_content > div {
+#content .gantt_selected_column_content > div {
   padding-left: 0.5rem;
   padding-right: 0.25rem;
   text-overflow: ellipsis;
 }
-.gantt_subjects div.issue-subject,
-.gantt_subjects div.version-name,
-.gantt_subjects div.project-name {
+#content .gantt_subjects div.issue-subject,
+#content .gantt_subjects div.version-name,
+#content .gantt_subjects div.project-name {
   @apply rounded-sm;
 }
-.gantt_subjects div.issue-subject:hover {
+#content .gantt_subjects div.issue-subject:hover {
   @apply bg-muted;
 }
-.gantt_subjects div.version-name,
-.gantt_subjects div.project-name {
+#content .gantt_subjects div.version-name,
+#content .gantt_subjects div.project-name {
   @apply font-semibold;
 }
-.gantt_subjects .expander {
+#content .gantt_subjects .expander {
   @apply text-muted-foreground;
 }
-.gantt_selected_column_content > div {
+#content .gantt_selected_column_content > div {
   @apply text-muted-foreground;
 }
 
 /* ---------- バー ---------- */
-.task {
+#content .task {
   @apply text-muted-foreground;
 }
-.task.label {
+#content .task.label {
   @apply text-xs;
   padding-left: 0.5rem;
 }
-.task.label.project, .task.label.version {
+#content .task.label.project, #content .task.label.version {
   @apply text-foreground font-semibold;
 }
 
 /* チケット: 太めの角丸バー。未完了は薄い色、完了分は濃い色、遅れは赤 */
-.task.leaf.task_todo,
-.task.leaf.task_late,
-.task.leaf.task_done {
+#content .task.leaf.task_todo,
+#content .task.leaf.task_late,
+#content .task.leaf.task_done {
   height: 14px;
   margin-top: 1px;
   border: 0;
   border-radius: 4px;
   box-sizing: border-box;
 }
-.task.leaf.task_todo {
+#content .task.leaf.task_todo {
   background: var(--gantt-bar-todo);
   box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--gantt-bar) 35%, transparent);
 }
-.task.leaf.task_late {
+#content .task.leaf.task_late {
   background: var(--gantt-bar-late);
   border-radius: 4px 0 0 4px;
 }
-.task.leaf.task_done {
+#content .task.leaf.task_done {
   background: var(--gantt-bar);
   border-radius: 4px 0 0 4px;
 }
 
 /* 親チケット: 細いバー + 両端のキャップ */
-.task.parent.task_todo,
-.task.parent.task_late,
-.task.parent.task_done {
+#content .task.parent.task_todo,
+#content .task.parent.task_late,
+#content .task.parent.task_done {
   height: 4px;
   margin-top: 6px;
   border: 0;
   border-radius: 9999px;
 }
-.task.parent.task_todo { background: var(--gantt-summary); }
-.task.parent.task_late { background: var(--destructive); }
-.task.parent.task_done { background: var(--gantt-summary-done); }
-.task.parent.marker.starting,
-.task.parent.marker.ending {
+#content .task.parent.task_todo { background: var(--gantt-summary); }
+#content .task.parent.task_late { background: var(--destructive); }
+#content .task.parent.task_done { background: var(--gantt-summary-done); }
+#content .task.parent.marker.starting,
+#content .task.parent.marker.ending {
   background: var(--gantt-summary-done);
   width: 3px !important; /* インラインで width: 15px が指定されている */
   height: 12px;
@@ -182,20 +183,20 @@ table.gantt-table td {
 }
 
 /* バージョン・プロジェクト: 細いバー + ひし形のマーカー */
-.task.version.task_todo, .task.project.task_todo,
-.task.version.task_late, .task.project.task_late,
-.task.version.task_done, .task.project.task_done {
+#content .task.version.task_todo, #content .task.project.task_todo,
+#content .task.version.task_late, #content .task.project.task_late,
+#content .task.version.task_done, #content .task.project.task_done {
   height: 4px;
   margin-top: 6px;
   border: 0;
   border-radius: 9999px;
   background-image: none;
 }
-.task.version.task_todo, .task.project.task_todo { background-color: var(--gantt-summary); }
-.task.version.task_late, .task.project.task_late { background-color: var(--destructive); }
-.task.version.task_done, .task.project.task_done { background-color: var(--gantt-summary-done); }
-.task.version.marker,
-.task.project.marker {
+#content .task.version.task_todo, #content .task.project.task_todo { background-color: var(--gantt-summary); }
+#content .task.version.task_late, #content .task.project.task_late { background-color: var(--destructive); }
+#content .task.version.task_done, #content .task.project.task_done { background-color: var(--gantt-summary-done); }
+#content .task.version.marker,
+#content .task.project.marker {
   background: var(--foreground);
   width: 8px !important;
   height: 8px;
@@ -204,16 +205,16 @@ table.gantt-table td {
   border-radius: 1px;
   transform: rotate(45deg);
 }
-.task.project.marker {
+#content .task.project.marker {
   background: var(--gantt-bar);
 }
 
 /* ---------- 今日の線（上端に丸をつける） ---------- */
-#today_line {
+#content #today_line {
   border-left: 1.5px solid var(--destructive) !important;
   z-index: 5;
 }
-#today_line::before {
+#content #today_line::before {
   content: "";
   position: absolute;
   top: -3px;
@@ -225,10 +226,10 @@ table.gantt-table td {
 }
 
 /* ---------- 期限・遅延の文字色 ---------- */
-.version-behind-schedule a, .issue-behind-schedule a {
+#content .version-behind-schedule a, #content .issue-behind-schedule a {
   color: var(--warning);
 }
-.version-overdue a, .issue-overdue a, .project-overdue a {
+#content .version-overdue a, #content .issue-overdue a, #content .project-overdue a {
   @apply text-destructive;
 }
 

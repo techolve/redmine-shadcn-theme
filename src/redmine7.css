@@ -1,0 +1,90 @@
+/* Redmine 7 で変わった・増えた部品
+ * ここのセレクタは Redmine 6 には存在しないので、6 では何も効かない。
+ * dropdown.css はテーマより後に読み込まれるので、#top-menu を付けて詳細度を上げる。
+ */
+
+/* ---------- トップメニュー（nav.top-menu: flex で左右に並ぶ） ---------- */
+#top-menu.top-menu {
+  justify-content: flex-start;
+  gap: 0.25rem;
+}
+#top-menu .general-menu {
+  margin-right: auto;
+}
+#top-menu .top-menu__links a,
+#top-menu #account .dropdown-trigger {
+  @apply rounded-md text-muted-foreground font-medium;
+  margin-right: 0;
+  padding: 0.25rem 0.5rem;
+}
+#top-menu .top-menu__links a:hover,
+#top-menu #account .dropdown-trigger:hover {
+  @apply bg-accent text-foreground;
+}
+#top-menu .top-menu__links svg.icon-svg,
+#top-menu #account .dropdown-trigger .icon-svg {
+  stroke: currentColor;
+}
+/* ダークモード切り替えボタンは一番右（float ではなく flex の順番で） */
+#top-menu.top-menu #shadcn-theme-toggle {
+  order: 99;
+  float: none;
+  margin: 0;
+}
+
+/* アカウントのドロップダウン（shadcn の DropdownMenu 風） */
+#top-menu .dropdown-content {
+  @apply bg-popover text-popover-foreground border border-border rounded-md shadow-md;
+  padding: 0.25rem;
+}
+#top-menu .dropdown-content li a,
+#top-menu .dropdown-content .dropdown-items a {
+  @apply rounded-sm text-popover-foreground text-sm;
+  padding: 0.375rem 0.5rem;
+}
+#top-menu .dropdown-content li a:hover,
+#top-menu .dropdown-content .dropdown-items a:hover {
+  @apply bg-accent text-accent-foreground;
+}
+#top-menu #account .dropdown-content .user-info {
+  @apply text-popover-foreground text-sm;
+  padding: 0.375rem 0.5rem;
+}
+#top-menu #account .dropdown-content .logout,
+#top-menu .dropdown-divider {
+  @apply border-border;
+}
+
+/* ---------- メインメニュー（7 は青い帯の背景と、選択中のタブの下に影の線） ---------- */
+#main-menu {
+  @apply bg-transparent;
+}
+#main-menu li a.selected,
+#main-menu li a.selected:hover {
+  box-shadow: none;
+}
+
+/* ---------- サイドバー: 選択中の項目（7 は左に影の線、hover で濃い青紫の文字） ---------- */
+#sidebar a.selected,
+#sidebar a.selected:hover {
+  @apply text-foreground;
+  box-shadow: none;
+}
+
+/* ---------- カレンダー: 今日の日付（7 は span.day-value の ::before に丸を描く） ---------- */
+.cal .calbody .day-value {
+  width: auto;
+  height: auto;
+}
+.cal .calbody.today .day-value {
+  color: inherit;
+}
+.cal .calbody.today .day-value::before {
+  display: none;
+}
+
+/* ---------- コードブロック（7 は .syntaxhl と div.wiki pre .syntaxhl に背景色を付けている） ---------- */
+.syntaxhl,
+div.wiki pre .syntaxhl {
+  background: transparent;
+}

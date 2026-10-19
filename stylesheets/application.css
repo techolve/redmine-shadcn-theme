@@ -276,8 +276,20 @@ body:not(.has-main-menu) #header {
   color: var(--foreground);
 }
 #main-menu li a.new-object {
+  border-radius: calc(var(--radius) - 2px);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--input);
   background-color: transparent;
   color: var(--muted-foreground);
+  --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  padding: 0.125rem 0.5rem;
+  margin: 0 0.25rem 0.375rem 0;
+}
+#main-menu li a.new-object:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }
 #main-menu .menu-children {
   border-radius: calc(var(--radius) - 2px);
@@ -1817,7 +1829,7 @@ div#issue-changesets {
 span.required {
   color: var(--destructive);
 }
-table.gantt-table {
+#content table.gantt-table {
   --gantt-row-start: 44px;
   --gantt-row-height: 20px;
   --gantt-row-padding: 2px;
@@ -1848,7 +1860,7 @@ table.gantt-table {
   border-collapse: separate;
   border-spacing: 0;
 }
-html.dark table.gantt-table {
+html.dark #content table.gantt-table {
   --gantt-bar: oklch(0.707 0.165 254.624);
   --gantt-bar-todo: var(--gantt-bar);
   @supports (color: color-mix(in lab, red, red)) {
@@ -1859,19 +1871,19 @@ html.dark table.gantt-table {
     --gantt-summary: color-mix(in oklab, var(--muted-foreground) 35%, var(--card));
   }
 }
-table.gantt-table td {
+#content table.gantt-table td {
   border-color: var(--border);
 }
-.gantt_hdr[style*="background"] {
+#content .gantt_hdr[style*="background"] {
   background: var(--muted) !important;
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in oklab, var(--muted) 50%, var(--card)) !important;
   }
 }
-.gantt_hdr, #gantt_area .gantt_hdr, .gantt_subjects_container:not(.draw_selected_columns) .gantt_hdr, .last_gantt_selected_column .gantt_hdr {
+#content .gantt_hdr, #content #gantt_area .gantt_hdr, #content .gantt_subjects_container:not(.draw_selected_columns) .gantt_hdr, #content .last_gantt_selected_column .gantt_hdr {
   border-color: var(--border);
 }
-.gantt_hdr {
+#content .gantt_hdr {
   font-size: var(--text-xs);
   line-height: var(--tw-leading, var(--text-xs--line-height));
   --tw-font-weight: var(--font-weight-medium);
@@ -1879,126 +1891,126 @@ table.gantt-table td {
   color: var(--muted-foreground);
   border-top: 0;
 }
-#gantt_area .gantt_hdr a {
+#content #gantt_area .gantt_hdr a {
   --tw-font-weight: var(--font-weight-semibold);
   font-weight: var(--font-weight-semibold);
   color: var(--foreground);
 }
-#gantt_area .gantt_hdr a:hover {
+#content #gantt_area .gantt_hdr a:hover {
   color: var(--link);
   text-decoration-line: none;
 }
-.gantt_hdr.nwday {
+#content .gantt_hdr.nwday {
   background: var(--muted);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in oklab, var(--muted) 60%, transparent);
   }
   color: var(--muted-foreground);
 }
-.gantt_hdr_selected_column_name {
+#content .gantt_hdr_selected_column_name {
   font-size: var(--text-xs);
   line-height: var(--tw-leading, var(--text-xs--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--muted-foreground);
 }
-#gantt_area {
+#content #gantt_area {
   background-color: var(--card);
 }
-#gantt_area, .gantt_subjects, .gantt_selected_column_content {
+#content #gantt_area, #content .gantt_subjects, #content .gantt_selected_column_content {
   background-image: repeating-linear-gradient( to bottom, transparent 0 calc(var(--gantt-row-height) - 1px), var(--gantt-row-line) calc(var(--gantt-row-height) - 1px) var(--gantt-row-height) );
   background-position: 0 calc(var(--gantt-row-start) - var(--gantt-row-padding) + 1px - var(--gantt-row-height));
   background-clip: content-box;
   padding-top: calc(var(--gantt-row-start) - var(--gantt-row-padding) + 1px);
   box-sizing: border-box;
 }
-.gantt_subjects, .gantt_selected_column_content {
+#content .gantt_subjects, #content .gantt_selected_column_content {
   height: 100%;
 }
-.gantt_subjects div, .gantt_selected_column_content div {
+#content .gantt_subjects div, #content .gantt_selected_column_content div {
   color: var(--foreground);
 }
-.gantt_subjects {
+#content .gantt_subjects {
   font-size: 0.8125rem;
 }
-.gantt_subjects form > div {
+#content .gantt_subjects form > div {
   margin-left: 0.5rem;
   padding-right: 1rem;
   box-sizing: border-box;
   text-overflow: ellipsis;
 }
-.gantt_selected_column_content > div {
+#content .gantt_selected_column_content > div {
   padding-left: 0.5rem;
   padding-right: 0.25rem;
   text-overflow: ellipsis;
 }
-.gantt_subjects div.issue-subject, .gantt_subjects div.version-name, .gantt_subjects div.project-name {
+#content .gantt_subjects div.issue-subject, #content .gantt_subjects div.version-name, #content .gantt_subjects div.project-name {
   border-radius: calc(var(--radius) - 4px);
 }
-.gantt_subjects div.issue-subject:hover {
+#content .gantt_subjects div.issue-subject:hover {
   background-color: var(--muted);
 }
-.gantt_subjects div.version-name, .gantt_subjects div.project-name {
+#content .gantt_subjects div.version-name, #content .gantt_subjects div.project-name {
   --tw-font-weight: var(--font-weight-semibold);
   font-weight: var(--font-weight-semibold);
 }
-.gantt_subjects .expander {
+#content .gantt_subjects .expander {
   color: var(--muted-foreground);
 }
-.gantt_selected_column_content > div {
+#content .gantt_selected_column_content > div {
   color: var(--muted-foreground);
 }
-.task {
+#content .task {
   color: var(--muted-foreground);
 }
-.task.label {
+#content .task.label {
   font-size: var(--text-xs);
   line-height: var(--tw-leading, var(--text-xs--line-height));
   padding-left: 0.5rem;
 }
-.task.label.project, .task.label.version {
+#content .task.label.project, #content .task.label.version {
   --tw-font-weight: var(--font-weight-semibold);
   font-weight: var(--font-weight-semibold);
   color: var(--foreground);
 }
-.task.leaf.task_todo, .task.leaf.task_late, .task.leaf.task_done {
+#content .task.leaf.task_todo, #content .task.leaf.task_late, #content .task.leaf.task_done {
   height: 14px;
   margin-top: 1px;
   border: 0;
   border-radius: 4px;
   box-sizing: border-box;
 }
-.task.leaf.task_todo {
+#content .task.leaf.task_todo {
   background: var(--gantt-bar-todo);
   box-shadow: inset 0 0 0 1px var(--gantt-bar);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--gantt-bar) 35%, transparent);
   }
 }
-.task.leaf.task_late {
+#content .task.leaf.task_late {
   background: var(--gantt-bar-late);
   border-radius: 4px 0 0 4px;
 }
-.task.leaf.task_done {
+#content .task.leaf.task_done {
   background: var(--gantt-bar);
   border-radius: 4px 0 0 4px;
 }
-.task.parent.task_todo, .task.parent.task_late, .task.parent.task_done {
+#content .task.parent.task_todo, #content .task.parent.task_late, #content .task.parent.task_done {
   height: 4px;
   margin-top: 6px;
   border: 0;
   border-radius: 9999px;
 }
-.task.parent.task_todo {
+#content .task.parent.task_todo {
   background: var(--gantt-summary);
 }
-.task.parent.task_late {
+#content .task.parent.task_late {
   background: var(--destructive);
 }
-.task.parent.task_done {
+#content .task.parent.task_done {
   background: var(--gantt-summary-done);
 }
-.task.parent.marker.starting, .task.parent.marker.ending {
+#content .task.parent.marker.starting, #content .task.parent.marker.ending {
   background: var(--gantt-summary-done);
   width: 3px !important;
   height: 12px;
@@ -2006,23 +2018,23 @@ table.gantt-table td {
   top: 2px;
   border-radius: 2px;
 }
-.task.version.task_todo, .task.project.task_todo, .task.version.task_late, .task.project.task_late, .task.version.task_done, .task.project.task_done {
+#content .task.version.task_todo, #content .task.project.task_todo, #content .task.version.task_late, #content .task.project.task_late, #content .task.version.task_done, #content .task.project.task_done {
   height: 4px;
   margin-top: 6px;
   border: 0;
   border-radius: 9999px;
   background-image: none;
 }
-.task.version.task_todo, .task.project.task_todo {
+#content .task.version.task_todo, #content .task.project.task_todo {
   background-color: var(--gantt-summary);
 }
-.task.version.task_late, .task.project.task_late {
+#content .task.version.task_late, #content .task.project.task_late {
   background-color: var(--destructive);
 }
-.task.version.task_done, .task.project.task_done {
+#content .task.version.task_done, #content .task.project.task_done {
   background-color: var(--gantt-summary-done);
 }
-.task.version.marker, .task.project.marker {
+#content .task.version.marker, #content .task.project.marker {
   background: var(--foreground);
   width: 8px !important;
   height: 8px;
@@ -2031,14 +2043,14 @@ table.gantt-table td {
   border-radius: 1px;
   transform: rotate(45deg);
 }
-.task.project.marker {
+#content .task.project.marker {
   background: var(--gantt-bar);
 }
-#today_line {
+#content #today_line {
   border-left: 1.5px solid var(--destructive) !important;
   z-index: 5;
 }
-#today_line::before {
+#content #today_line::before {
   content: "";
   position: absolute;
   top: -3px;
@@ -2048,10 +2060,10 @@ table.gantt-table td {
   border-radius: 9999px;
   background: var(--destructive);
 }
-.version-behind-schedule a, .issue-behind-schedule a {
+#content .version-behind-schedule a, #content .issue-behind-schedule a {
   color: var(--warning);
 }
-.version-overdue a, .issue-overdue a, .project-overdue a {
+#content .version-overdue a, #content .issue-overdue a, #content .project-overdue a {
   color: var(--destructive);
 }
 #content.gantt_content table.gantt-table {
@@ -2269,6 +2281,87 @@ p.cal.legend > span > svg.icon-svg {
   stroke: var(--chip);
   width: 0.875rem;
   height: 0.875rem;
+}
+#top-menu.top-menu {
+  justify-content: flex-start;
+  gap: 0.25rem;
+}
+#top-menu .general-menu {
+  margin-right: auto;
+}
+#top-menu .top-menu__links a, #top-menu #account .dropdown-trigger {
+  border-radius: calc(var(--radius) - 2px);
+  --tw-font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--muted-foreground);
+  margin-right: 0;
+  padding: 0.25rem 0.5rem;
+}
+#top-menu .top-menu__links a:hover, #top-menu #account .dropdown-trigger:hover {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+#top-menu .top-menu__links svg.icon-svg, #top-menu #account .dropdown-trigger .icon-svg {
+  stroke: currentColor;
+}
+#top-menu.top-menu #shadcn-theme-toggle {
+  order: 99;
+  float: none;
+  margin: 0;
+}
+#top-menu .dropdown-content {
+  border-radius: calc(var(--radius) - 2px);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border);
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  padding: 0.25rem;
+}
+#top-menu .dropdown-content li a, #top-menu .dropdown-content .dropdown-items a {
+  border-radius: calc(var(--radius) - 4px);
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  color: var(--popover-foreground);
+  padding: 0.375rem 0.5rem;
+}
+#top-menu .dropdown-content li a:hover, #top-menu .dropdown-content .dropdown-items a:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+#top-menu #account .dropdown-content .user-info {
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  color: var(--popover-foreground);
+  padding: 0.375rem 0.5rem;
+}
+#top-menu #account .dropdown-content .logout, #top-menu .dropdown-divider {
+  border-color: var(--border);
+}
+#main-menu {
+  background-color: transparent;
+}
+#main-menu li a.selected, #main-menu li a.selected:hover {
+  box-shadow: none;
+}
+#sidebar a.selected, #sidebar a.selected:hover {
+  color: var(--foreground);
+  box-shadow: none;
+}
+.cal .calbody .day-value {
+  width: auto;
+  height: auto;
+}
+.cal .calbody.today .day-value {
+  color: inherit;
+}
+.cal .calbody.today .day-value::before {
+  display: none;
+}
+.syntaxhl, div.wiki pre .syntaxhl {
+  background: transparent;
 }
 html.dark img.gravatar {
   background-color: var(--muted);

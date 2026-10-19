@@ -1,5 +1,6 @@
 // Redmine のアイコン名 → Lucide アイコン名 の対応表から images/icons.svg を生成する
 // ここに無いアイコンは Redmine 標準のスプライトにフォールバックする
+// Redmine 6 と 7 の両方のアイコン名を入れている（片方にしか無い名前は、もう片方では使われないだけ）
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
@@ -51,6 +52,10 @@ const ICONS = {
   'email-disabled': 'mail-x',
   'fav': 'star',
   'file': 'file',
+  'file-music': 'file-music',
+  'file-type-docx': 'file-text',
+  'file-type-ppt': 'presentation',
+  'file-type-xls': 'file-spreadsheet',
   'folder': 'folder',
   'folder-open': 'folder-open',
   'group': 'users',
@@ -68,15 +73,19 @@ const ICONS = {
   'issue-note': 'message-square-text',
   'key': 'key-round',
   'link': 'link',
+  'link-add': 'link',
   'link-break': 'unlink',
   'list': 'list',
   'loader': 'loader-circle',
   'lock': 'lock',
+  'maximize': 'maximize',
   'message': 'message-circle',
   'message-report': 'message-square-warning',
   'move': 'move',
+  'movie': 'file-video-camera',
   'news': 'newspaper',
   'package': 'package',
+  'photo': 'file-image',
   'plugins': 'plug',
   'project': 'box',
   'projects': 'boxes',
@@ -106,11 +115,13 @@ const ICONS = {
   'time-add': 'clock-plus',
   'toggle-minus': 'square-minus',
   'toggle-plus': 'square-plus',
+  'unknown': 'file-question-mark',
   'unlock': 'lock-open',
   'unwatch': 'eye-off',
   'user': 'user',
   'warning': 'triangle-alert',
   'watch': 'eye',
+  'webhook': 'webhook',
   'wiki-page': 'book-open',
   'workflows': 'workflow',
   'zoom-in': 'zoom-in',
