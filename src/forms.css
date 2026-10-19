@@ -1,0 +1,133 @@
+/* Input / Select / Textarea / Button */
+
+input, select, textarea, button {
+  @apply bg-background text-foreground border border-input rounded-md shadow-xs;
+  transition: color 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+input, select, button {
+  height: 2rem;
+  padding: 0 0.625rem;
+}
+textarea {
+  @apply px-2.5 py-2;
+}
+input[type="checkbox"], input[type="radio"] {
+  @apply shadow-none;
+  height: auto;
+  accent-color: var(--primary);
+}
+input[type="file"] {
+  @apply shadow-none border-0;
+}
+input::placeholder, textarea::placeholder {
+  @apply text-muted-foreground;
+}
+select, #project-jump .drdn-trigger {
+  padding-right: 1.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-position: right 0.5rem center;
+}
+select[multiple=multiple] {
+  @apply bg-background;
+  background-image: none;
+  padding-right: 0.625rem;
+}
+
+/* オートコンプリート付きの入力欄（親チケット・関連チケットなど）。本体は背景が #fff 固定 */
+input.autocomplete {
+  background-color: var(--background);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+  background-size: 0.875rem;
+  background-position: 0.5rem 50%;
+  padding-left: 1.75rem !important;
+}
+.drdn-content .quick-search input.autocomplete {
+  background-image: none;
+}
+
+/* focus ring（shadcn の focus-visible:ring-[3px] 相当） */
+input[type="text"]:focus, input[type="text"]:active,
+input[type="password"]:focus, input[type="password"]:active,
+input[type="date"]:focus, input[type="date"]:active,
+input[type="number"]:focus, input[type="number"]:active,
+input[type="email"]:focus, input[type="search"]:focus,
+select:focus, select:active,
+textarea:focus, textarea:active {
+  @apply border-ring outline-none;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+input:disabled, select:disabled, textarea:disabled {
+  @apply bg-muted text-muted-foreground opacity-70 cursor-not-allowed;
+}
+
+/* Button: default variant */
+input[type="submit"], button[type="submit"] {
+  @apply bg-primary text-primary-foreground border-primary font-medium px-4 cursor-pointer text-sm;
+}
+/* フォーム下部のボタン列（作成・連続作成・キャンセルなど） */
+form > input[type="submit"], form > p > input[type="submit"],
+p.buttons input[type="submit"], .buttons input[type="submit"] {
+  height: 2.25rem;
+  margin-right: 0.375rem;
+}
+input[type="submit"]:hover, button[type="submit"]:hover {
+  @apply bg-primary/90 border-primary/90;
+}
+
+/* Button: outline variant（submit 以外のボタン） */
+input[type="button"], button:not([type="submit"]):not(.icon-only) {
+  @apply bg-background text-foreground font-medium cursor-pointer;
+}
+input[type="button"]:hover, button:not([type="submit"]):not(.icon-only):hover {
+  @apply bg-accent text-accent-foreground;
+}
+
+/* fieldset / legend */
+fieldset {
+  @apply border-border rounded-lg;
+}
+fieldset.collapsible {
+  @apply rounded-none;
+}
+legend {
+  @apply text-sm font-medium text-foreground px-1;
+}
+
+/* フォームの枠（新規チケット・設定画面など） */
+.box, .tabular {
+  @apply bg-card text-card-foreground border border-border rounded-lg shadow-xs;
+}
+.tabular .box, .box .tabular {
+  @apply border-0 shadow-none;
+}
+.box {
+  padding: 1rem 1.25rem;
+}
+.tabular label {
+  @apply font-medium text-foreground;
+}
+em.info, .info {
+  @apply text-muted-foreground;
+}
+
+/* ログイン */
+#login-form {
+  @apply bg-card text-card-foreground border border-border rounded-xl shadow-sm;
+  padding: 1.5rem;
+  width: 360px;
+}
+#login-form h3 {
+  @apply text-xl font-semibold;
+}
+#login-form label {
+  @apply font-medium text-sm;
+}
+#login-form input {
+  height: 2.25rem;
+}
+#login-form input[type=submit] {
+  @apply mt-2;
+}

@@ -1,0 +1,142 @@
+/* カレンダー（ReUI の Event Calendar を参考にしたデザイン）
+ *
+ * Redmine 6 のカレンダーは <ul class="cal"> の CSS グリッド（週番号 + 7 日）。
+ *   li.calhead       : 曜日のヘッダー（先頭は週番号列のヘッダー）
+ *   li.week-number   : 週番号
+ *   li.calbody       : 日付のセル（this-month / other-month / nwday / today）
+ *   div.issue        : チケット。starting（開始日）/ ending（期日）/ 両方 で色を分ける
+ * セルの中のツールチップがはみ出すので、ul に overflow: hidden は使わず角だけ丸める。
+ */
+ul.cal, p.cal.legend {
+  --cal-start: var(--info);
+  --cal-end: var(--warning);
+  --cal-both: oklch(0.627 0.265 303.9);
+}
+ul.cal {
+  @apply bg-card border border-border rounded-xl shadow-xs;
+  grid-template-columns: 2.5rem repeat(7, 1fr);
+}
+ul.cal > li {
+  @apply border-0;
+}
+
+/* 角丸（左上・右上・左下・右下のセル） */
+ul.cal > li:first-child { border-top-left-radius: var(--radius-xl); }
+ul.cal > li.calhead:nth-child(8) { border-top-right-radius: var(--radius-xl); }
+ul.cal > li.week-number:nth-last-child(8) { border-bottom-left-radius: var(--radius-xl); }
+ul.cal > li:last-child { border-bottom-right-radius: var(--radius-xl); }
+
+/* ---------- ヘッダー（曜日） ---------- */
+.cal .calhead {
+  @apply bg-transparent text-muted-foreground text-xs font-medium text-left;
+  padding: 0.5rem 0.625rem;
+}
+
+/* ---------- 週番号 ---------- */
+.cal .week-number {
+  @apply bg-transparent text-muted-foreground text-xs text-center;
+  padding: 0.5rem 0.25rem;
+}
+.cal .week-number:not(.calhead) {
+  @apply border-t border-border;
+}
+
+/* ---------- 日付のセル ---------- */
+.cal .calbody {
+  @apply flex flex-col gap-1 bg-transparent border-0 border-l border-t border-border shadow-none;
+  min-height: 6.5rem;
+  padding: 0.375rem;
+  line-height: 1.35;
+}
+.cal .calbody.this-month,
+.cal .calbody.nwday:not(.other-month) {
+  @apply bg-transparent;
+}
+.cal .calbody.other-month {
+  background: color-mix(in oklab, var(--muted) 35%, transparent);
+}
+
+/* 日付の数字は右下（予定が上に並ぶ） */
+.cal .calbody p.day-num {
+  @apply order-last mt-auto mb-0 self-end inline-flex items-center justify-center text-xs font-medium text-muted-foreground rounded-full;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.25rem;
+}
+.cal .calbody.other-month p.day-num {
+  @apply text-muted-foreground/50;
+}
+.cal .calbody.today {
+  background: transparent;
+}
+.cal .calbody.today p.day-num {
+  @apply bg-foreground text-background font-semibold;
+}
+
+/* ---------- チケット（チップ） ---------- */
+.cal .calbody div.issue {
+  --chip: var(--cal-start);
+  /* 中身はアイコン・リンク・テキストが混ざるので flex にせず、行内で折り返す */
+  @apply block rounded-md border-0 shadow-none text-xs text-foreground m-0;
+  background: color-mix(in oklab, var(--chip) 14%, var(--card));
+  padding: 0.25rem 0.375rem;
+  word-break: break-word;
+}
+.cal .calbody div.issue.ending { --chip: var(--cal-end); }
+.cal .calbody div.issue.starting.ending { --chip: var(--cal-both); }
+.cal .calbody div.issue:hover {
+  background: color-mix(in oklab, var(--chip) 24%, var(--card));
+}
+.cal .calbody div.issue > svg.icon-svg {
+  stroke: var(--chip);
+  width: 0.875rem;
+  height: 0.875rem;
+  vertical-align: -0.1875rem;
+  margin-right: 0.125rem;
+}
+.cal .calbody div.issue > a.issue {
+  @apply font-medium;
+  color: color-mix(in oklab, var(--chip) 70%, var(--foreground));
+}
+/* 終了したチケット */
+.cal .calbody div.issue:has(> a.issue.closed) {
+  @apply opacity-60;
+}
+
+/* ツールチップ: 金曜・土曜の列は右にはみ出すので、チップの右端にそろえて左向きに開く
+ * （li の並び: ヘッダー 8 個のあと、週番号・日〜土 の 8 個ずつ） */
+.cal .calbody:nth-child(8n+7) div.tooltip:hover span.tip,
+.cal .calbody:nth-child(8n) div.tooltip:hover span.tip {
+  left: auto;
+  right: 0;
+}
+
+/* バージョン（期日） */
+.cal .calbody > span.icon {
+  @apply flex items-center gap-1 rounded-md bg-muted text-xs font-medium;
+  padding: 0.25rem 0.375rem;
+}
+.cal .calbody > span.icon svg.icon-svg {
+  @apply text-muted-foreground;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.cal .calbody > span.icon a {
+  @apply text-foreground;
+}
+
+/* ---------- 凡例 ---------- */
+p.cal.legend {
+  @apply flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground mt-3;
+}
+p.cal.legend > span {
+  --chip: var(--cal-start);
+  @apply items-center gap-1.5;
+}
+p.cal.legend > span.ending { --chip: var(--cal-end); }
+p.cal.legend > span.starting.ending { --chip: var(--cal-both); }
+p.cal.legend > span > svg.icon-svg {
+  stroke: var(--chip);
+  width: 0.875rem;
+  height: 0.875rem;
+}

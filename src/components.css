@@ -1,0 +1,253 @@
+/* テーブル / タブ / フラッシュ / ページネーション / ドロップダウン / Wiki */
+
+/* ---------- table.list（shadcn の Table 風） ---------- */
+table.list, .table-list {
+  @apply border border-border rounded-lg overflow-hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+table.list th, .table-list-header {
+  @apply bg-muted/50 text-muted-foreground font-medium text-xs border-b border-border;
+  padding: 0.625rem 0.5rem;
+}
+table.list th a {
+  @apply text-muted-foreground;
+}
+table.list th a:hover {
+  @apply text-foreground no-underline;
+}
+table.list td {
+  @apply border-t border-border;
+  padding: 0.5rem 0.625rem;
+}
+table.list td.checkbox, table.list th.checkbox {
+  padding-left: 0.75rem;
+  padding-right: 0.25rem;
+}
+table.list tbody tr:first-child td {
+  @apply border-t-0;
+}
+table.list tbody tr:hover,
+tr.odd, tr.even {
+  @apply bg-transparent;
+}
+table.list tbody tr:hover td {
+  @apply bg-muted/50;
+}
+table.list tbody tr.context-menu-selection td {
+  @apply bg-accent text-accent-foreground;
+}
+table.list tbody tr.context-menu-selection td a {
+  @apply text-accent-foreground;
+}
+.query-totals {
+  @apply text-muted-foreground;
+}
+
+/* 進捗バー */
+table.progress {
+  @apply rounded-full overflow-hidden border-0;
+}
+table.progress td {
+  height: 0.5rem;
+}
+table.progress td.closed {
+  @apply bg-primary;
+}
+table.progress td.done {
+  @apply bg-primary/60;
+}
+table.progress td.todo {
+  @apply bg-muted;
+}
+
+/* ---------- tabs（設定画面などの .tabs） ---------- */
+div.tabs ul {
+  @apply border-b border-border;
+}
+div.tabs ul li a {
+  @apply bg-transparent text-muted-foreground border-0 border-b-2 border-transparent rounded-none font-medium;
+  padding: 0.5rem 0.75rem;
+}
+div.tabs ul li a:hover {
+  @apply bg-transparent text-foreground no-underline;
+}
+div.tabs ul li a.selected {
+  @apply bg-transparent text-foreground border-b-2 border-primary;
+}
+
+/* ---------- flash / error（shadcn の Alert） ----------
+ * shadcn の Alert は default と destructive の 2 種類だけなので、
+ *   default     : 成功（flash.notice）・警告（flash.warning / .conflict / .warning）
+ *   destructive : エラー（flash.error / #errorExplanation）
+ * 背景は色を付けずカード色、枠線も共通。違いはアイコンと文字の色で出す。
+ * 中身はテキストとリンクや段落が混ざるので flex にせず、アイコンだけ左に絶対配置する。
+ */
+div.flash, #errorExplanation, .conflict, .warning {
+  @apply relative bg-card text-card-foreground border border-border rounded-lg text-sm text-left;
+  background-image: none;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  margin: 0 0 1rem 0;
+}
+div.flash {
+  margin-top: 0.5rem;
+}
+/* アイコン: 本体はパディングの中に負のマージンで置いているので、普通の並びに戻す */
+div.flash svg.icon-svg,
+#errorExplanation svg.icon-svg,
+#errorExplanation:has(svg) > svg.icon-svg,
+.conflict svg.icon-svg {
+  @apply absolute m-0;
+  left: 1rem;
+  top: 0.9375rem;
+  bottom: auto;
+  width: 1rem;
+  height: 1rem;
+  stroke: currentColor;
+}
+#errorExplanation:has(svg) {
+  position: relative;
+}
+
+/* default */
+div.flash.notice,
+div.flash.warning, .conflict, .warning {
+  @apply text-card-foreground;
+  border-color: var(--border);
+  background-color: var(--card);
+}
+div.flash.notice svg.icon-svg {
+  stroke: currentColor;
+}
+div.flash.warning svg.icon-svg, .conflict svg.icon-svg {
+  stroke: var(--warning);
+}
+
+/* destructive */
+div.flash.error, #errorExplanation {
+  @apply text-destructive;
+  border-color: var(--border);
+  background-color: var(--card);
+}
+div.flash.error svg.icon-svg, #errorExplanation svg.icon-svg {
+  stroke: currentColor;
+}
+#errorExplanation ul {
+  @apply m-0 pl-4 list-disc text-sm;
+  font-size: inherit;
+  color: color-mix(in oklab, var(--destructive) 90%, transparent);
+}
+/* エラーが 1 件だけのときは箇条書きにしない */
+#errorExplanation ul:has(> li:only-child) {
+  @apply list-none pl-0;
+}
+
+/* アイコンの無い警告（.warning / .conflict）には ::before で Lucide の triangle-alert を描く */
+.warning:not(:has(svg))::before,
+.conflict:not(:has(svg))::before {
+  content: "";
+  @apply absolute;
+  left: 1rem;
+  top: 0.9375rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--warning);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* 「表示するデータがありません」（shadcn の Alert の default バリアント風）
+ * HTML はただの <p class="nodata"> なので、アイコン（Lucide の info）は ::before にマスクで描く */
+.nodata {
+  @apply flex items-center gap-3 bg-card text-muted-foreground border border-border rounded-lg text-sm text-left;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem 0;
+}
+.nodata::before {
+  content: "";
+  @apply shrink-0 bg-current;
+  width: 1rem;
+  height: 1rem;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- pagination ---------- */
+.pagination ul.pages li {
+  @apply border-0 mr-1;
+}
+.pagination ul.pages li a,
+.pagination ul.pages li span {
+  @apply rounded-md border border-border text-foreground px-2.5 py-1;
+}
+.pagination ul.pages li:first-child,
+.pagination ul.pages li:last-child {
+  /* 本体は先頭の li に左の線（border-inline-start-width）を付けているので消す */
+  border: 0;
+  border-radius: 0;
+}
+.pagination ul.pages li.current {
+  @apply bg-transparent;
+}
+.pagination ul.pages li.current span {
+  @apply bg-primary text-primary-foreground border-primary;
+}
+.pagination ul.pages li.page:hover {
+  @apply bg-transparent;
+}
+.pagination ul.pages li.page a:hover {
+  @apply bg-accent no-underline;
+}
+.pagination .per-page span.selected {
+  @apply bg-primary text-primary-foreground rounded-sm px-1.5;
+}
+
+/* ---------- dropdown（.drdn / context menu） ---------- */
+.drdn-content {
+  @apply bg-popover text-popover-foreground border border-border rounded-md shadow-md;
+}
+.drdn-items > a, .drdn-items > span {
+  @apply rounded-sm;
+}
+.contextual .drdn-items > a:hover,
+.journal-actions .drdn-items > a:hover,
+.drdn-items > a:hover {
+  @apply bg-accent text-accent-foreground no-underline;
+}
+div#context-menu a:hover {
+  @apply bg-accent text-accent-foreground;
+}
+
+/* ---------- 汎用 ---------- */
+.contextual a {
+  @apply text-muted-foreground;
+}
+.contextual a:hover {
+  @apply text-foreground no-underline;
+}
+
+/* ---------- Wiki / テキスト ---------- */
+/* 本体は div.wiki pre（背景 #fafafa）なので同じ詳細度で上書きする */
+div.wiki pre, pre {
+  @apply bg-muted text-foreground border border-border rounded-lg;
+  padding: 0.75rem 1rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+div.wiki *:not(pre) > code, div.wiki > code, code {
+  @apply bg-muted rounded-sm text-[0.85em];
+  padding: 0.1em 0.35em;
+}
+.wiki pre code {
+  @apply bg-transparent p-0;
+}
+.wiki blockquote, blockquote {
+  @apply border-l-2 border-border text-muted-foreground italic;
+  padding-left: 1rem;
+}
+.wiki table td, .wiki table th {
+  @apply border border-border px-3 py-1.5;
+}
+.wiki table th {
+  @apply bg-muted/50;
+}

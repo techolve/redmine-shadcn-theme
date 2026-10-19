@@ -1,0 +1,84 @@
+/* チケット詳細 / 履歴 */
+
+/* チケット本体（shadcn の Card 風） */
+div.issue {
+  @apply bg-card text-card-foreground border border-border rounded-xl shadow-xs;
+  padding: 1.25rem 1.5rem;
+}
+div.issue div.subject h3 {
+  @apply text-lg font-semibold;
+}
+div.issue div.subject p,
+div.issue p.author,
+div.issue .next-prev-links {
+  @apply text-muted-foreground;
+}
+div.issue .attributes .attribute .label {
+  @apply font-medium text-muted-foreground;
+}
+div.issue hr {
+  @apply bg-border border-0 h-px my-4;
+}
+
+/* 履歴・コメント・フォーラムの返信（.journals .journal 共通）
+ * 1件ずつ Card にして、ヘッダーと本文の余白をそろえる
+ */
+.journals .journal {
+  @apply bg-card border border-border rounded-lg overflow-hidden mb-3;
+}
+.journals h4.journal-header {
+  @apply bg-muted/50 border-0 border-b border-border text-sm font-normal text-foreground m-0 gap-3;
+  padding: 0.5rem 0.75rem;
+}
+.journals h4.journal-header .update-info {
+  @apply text-muted-foreground;
+}
+.journals div:target h4.journal-header {
+  background-color: color-mix(in oklab, var(--info) 12%, var(--card));
+}
+.journals .journal-meta .journal-link,
+.journals .journal-actions a {
+  @apply text-muted-foreground;
+}
+.journals .journal-actions a:hover {
+  @apply text-foreground;
+}
+.journals .journal-details,
+ul.revision-info {
+  @apply text-muted-foreground m-0;
+  padding: 0.625rem 1rem 0.625rem 2rem;
+}
+.journals .journal-details a, ul.revision-info a,
+.journals .journal-details a:hover, ul.revision-info a:hover {
+  @apply text-link;
+}
+.journals .journal-content {
+  @apply m-0;
+  padding: 0.25rem 1rem 0.5rem 1rem;
+}
+.journals .journal .journal-content .wiki {
+  @apply m-0;
+}
+.journals .journal-details + .journal-content {
+  @apply border-t border-border;
+}
+/* 変更履歴だけでコメントが無いものは本文が空になるので詰める */
+.journals .journal-content:empty {
+  @apply hidden;
+}
+.journals .private-notes {
+  border-left: 3px solid var(--destructive);
+}
+.journals h3.comments {
+  @apply mb-3;
+}
+
+/* 関連チケット・子チケット */
+#relations table.list, #issue_tree table.list {
+  @apply border-0 rounded-none;
+}
+
+/* ステータスやトラッカーの「バッジ」っぽい見た目 */
+.badge, span.badge {
+  @apply inline-flex items-center rounded-md border border-border px-2 py-0.5 text-xs font-medium;
+}

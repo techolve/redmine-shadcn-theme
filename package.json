@@ -1,0 +1,24 @@
+{
+  "name": "redmine-shadcn-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "shadcn/ui inspired theme for Redmine 6",
+  "author": "Techolve",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techolve/redmine-shadcn-theme.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run build:icons && npm run build:css",
+    "build:css": "tailwindcss -i src/application.css -o stylesheets/application.css",
+    "build:icons": "node src/tools/build-icons.mjs",
+    "watch": "tailwindcss -i src/application.css -o stylesheets/application.css --watch",
+    "reload": "npm run build && docker compose restart redmine"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "lucide-static": "^1.59.0",
+    "tailwindcss": "^4.1.0"
+  }
+}

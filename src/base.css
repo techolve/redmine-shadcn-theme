@@ -1,0 +1,42 @@
+/* 文字・リンク・見出しなどの土台 */
+html, body, #wrapper {
+  @apply bg-background text-foreground;
+}
+
+body {
+  @apply antialiased;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+a, a:link, a:visited {
+  @apply text-link;
+}
+a:hover, a:active {
+  @apply text-link underline underline-offset-4;
+}
+
+#content h1, h2, h3, h4, h5, h6 {
+  @apply text-foreground;
+}
+h2 {
+  @apply text-xl font-semibold tracking-tight;
+}
+h3 {
+  @apply text-base font-semibold;
+}
+h4 {
+  @apply border-border font-medium;
+}
+
+pre, code, tt {
+  font-family: var(--fonts-mono);
+}
+
+hr {
+  @apply border-0 border-t border-border;
+}
+
+::selection {
+  @apply bg-primary text-primary-foreground;
+}

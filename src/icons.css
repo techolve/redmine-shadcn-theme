@@ -1,0 +1,42 @@
+/* SVG アイコン（images/icons.svg = Lucide で差し替え）
+ * 本体は固定色（#343a40 / #169）なので、文字色（currentColor）に追従させる
+ */
+svg.icon-svg {
+  stroke: currentColor;
+  stroke-width: 2;
+}
+svg.icon-svg.s14, svg.icon-svg.s12 {
+  stroke-width: 2.25;
+}
+svg.icon-svg-filled {
+  fill: currentColor;
+  stroke: none;
+}
+
+a.icon .icon-svg,
+a.icon-only .icon-svg,
+span.icon-actions .icon-svg,
+a.icon:hover .icon-svg,
+a.icon-only:hover .icon-svg,
+span.icon-actions:hover .icon-svg {
+  stroke: currentColor;
+}
+a.icon .icon-svg-filled,
+a.icon-only .icon-svg-filled,
+a.icon:hover .icon-svg-filled,
+a.icon-only:hover .icon-svg-filled {
+  stroke: none;
+  fill: currentColor;
+}
+
+/* 操作系アイコン（… や 編集・削除）は控えめな色にして、hover で濃くする */
+span.icon-actions, a.icon-only {
+  @apply text-muted-foreground;
+}
+span.icon-actions:hover, a.icon-only:hover {
+  @apply text-foreground;
+}
+
+svg.icon-ok { stroke: var(--success); }
+.icon-error svg.icon-svg { stroke: var(--destructive); }
+.icon-warning svg.icon-svg { stroke: var(--warning); }

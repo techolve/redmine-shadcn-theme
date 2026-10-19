@@ -1,0 +1,557 @@
+/* 画面ごとのスタイル
+ * 作業時間 / 管理画面 / ロードマップ / 活動 / マイページ / エディタ
+ * 本体の固定色をトークンに置き換えるので、ダークモードもこれで追従する
+ */
+
+/* ---------- テーブル共通（管理画面の一覧などの縞模様） ---------- */
+table.list:not(.odd-even) tbody tr:nth-child(odd),
+table.list:not(.odd-even) tbody tr:nth-child(even),
+.odd, .even,
+#issue-changesets div.changeset:nth-child(odd),
+#issue-changesets div.changeset:nth-child(even) {
+  @apply bg-transparent;
+}
+table.list:not(.odd-even) tbody tr:nth-child(odd):hover,
+table.list:not(.odd-even) tbody tr:nth-child(even):hover,
+.odd:hover, .even:hover,
+#issue-changesets div.changeset:nth-child(even):hover {
+  @apply bg-muted/50;
+}
+table.list tbody tr.group:hover td,
+tr.group td {
+  @apply bg-muted/30 border-b border-border;
+}
+tr.group span.totals,
+tr.group a.toggle-all {
+  @apply text-muted-foreground;
+}
+tr.group span.totals .value {
+  @apply text-foreground;
+}
+table.list tr.overdue:not(.context-menu-selection) td.due_date {
+  @apply text-destructive;
+}
+tr.version.closed, tr.version.closed a {
+  @apply text-muted-foreground;
+}
+table.issues td.block_column {
+  @apply text-muted-foreground;
+}
+
+/* 検索結果のハイライト */
+.highlight {
+  background-color: color-mix(in oklab, var(--warning) 35%, transparent);
+  color: inherit;
+}
+
+/* ---------- タブ（#content .tabs: 設定画面・チケットの履歴など） ---------- */
+#content .tabs ul {
+  @apply border-b border-border;
+}
+#content .tabs ul li a {
+  @apply bg-transparent text-muted-foreground font-medium border-0 border-b-2 border-transparent rounded-none shadow-none;
+  padding: 0.375rem 0.75rem;
+}
+#content .tabs ul li a:hover {
+  @apply text-foreground;
+}
+#content .tabs ul li a.selected,
+#content .tabs ul li a.selected:hover {
+  @apply bg-transparent text-foreground border-0 border-b-2 border-primary shadow-none;
+}
+div.tabs-buttons {
+  @apply bg-background;
+}
+
+/* ---------- ツールチップ（カレンダー・ガントのチケット詳細） ---------- */
+.tooltip:hover {
+  @apply text-foreground;
+}
+div.tooltip:hover span.tip {
+  @apply bg-popover text-popover-foreground border border-border rounded-md shadow-md text-xs;
+  padding: 0.5rem 0.75rem;
+}
+.tooltip span.tip a {
+  color: var(--link) !important;
+}
+
+/* ---------- 作業時間 ---------- */
+table#time-report tbody tr.subtotal {
+  @apply text-muted-foreground;
+}
+table#time-report tbody tr.subtotal td.hours {
+  @apply text-muted-foreground;
+}
+table#time-report tbody tr.total,
+table.issue-report tr.total,
+table.issue-report-detailed tr.total {
+  @apply bg-muted/50 border-t border-border;
+}
+table#time-report td.hours, .hours {
+  font-variant-numeric: tabular-nums;
+}
+p.query-totals, .query-totals {
+  @apply text-sm text-muted-foreground;
+}
+.query-totals .value {
+  @apply text-foreground font-semibold;
+}
+fieldset#date-range {
+  @apply rounded-lg;
+}
+
+/* ---------- 管理画面 ---------- */
+#admin-menu ul li a {
+  @apply flex items-center gap-2 rounded-md;
+}
+#admin-menu a.selected {
+  @apply bg-accent text-accent-foreground;
+}
+#admin-index #admin-menu ul,
+#admin-menu ul {
+  @apply m-0 p-0;
+}
+#admin-index #admin-menu li {
+  @apply list-none;
+}
+#admin-index #admin-menu li a {
+  @apply px-3 py-2 text-base;
+}
+#admin-index #admin-menu li a:hover {
+  @apply bg-accent no-underline;
+}
+table.permissions td.role {
+  @apply text-muted-foreground;
+}
+table.transitions td.enabled {
+  background: color-mix(in oklab, var(--success) 18%, transparent);
+}
+table.fields_permissions td.readonly {
+  @apply bg-muted;
+}
+table.fields_permissions td.required {
+  background: color-mix(in oklab, var(--destructive) 22%, transparent);
+}
+p.warning, div.warning {
+  @apply text-foreground;
+}
+
+/* ---------- ロードマップ / バージョン ---------- */
+/* 関連するチケット: チェックボックスの列は非表示なので担当者（アバター）の列が左端になる。
+ * 本体は padding: 0 なのでアバターが枠に接する。幅をアバター 1 つ分に固定して題名の位置もそろえる */
+div#roadmap .related-issues td.assigned_to {
+  width: 1rem;
+  padding: 0.5rem 0 0.5rem 0.75rem;
+}
+div#roadmap .related-issues td.assigned_to .avatar {
+  @apply m-0 align-middle;
+}
+div#roadmap .related-issues td.subject {
+  padding-left: 0.625rem;
+}
+div#roadmap .related-issues caption {
+  @apply text-sm font-medium text-muted-foreground;
+}
+div#version-summary {
+  @apply bg-card border border-border rounded-lg;
+  padding: 0.75rem 1rem;
+}
+div#version-summary fieldset {
+  @apply border-0;
+}
+a#toggle-completed-versions,
+a#toggle-completed-versions:hover {
+  @apply text-muted-foreground;
+}
+a#toggle-completed-versions svg,
+a#toggle-completed-versions:hover svg {
+  stroke: currentColor;
+}
+p.progress-info {
+  @apply text-muted-foreground;
+}
+
+/* ---------- 活動 / 検索結果 ---------- */
+div#activity dt .time {
+  @apply text-muted-foreground;
+}
+div#activity dt.me .time {
+  @apply border-border;
+}
+div#activity dd span.description,
+#search-results dd span.description,
+div#activity dd span.author,
+#search-results dd span.author {
+  @apply text-muted-foreground;
+}
+/* 日付の見出し（今日・昨日…）。本体は #f6f7f8 の背景 */
+div#activity h3 {
+  @apply bg-transparent text-sm font-semibold text-foreground border-b border-border;
+  padding: 0 0 0.375rem 0;
+  margin: 1.5rem 0 0.25rem 0;
+}
+div#activity > h3:first-child {
+  @apply mt-0;
+}
+/* 各項目の区切り線（本体は #e8eaed 固定） */
+div#activity dt {
+  @apply items-center gap-1 border-border;
+  padding-top: 0.625rem;
+}
+div#activity dt .avatar {
+  margin-right: 0.5rem;
+}
+
+/* ---------- マイページ ---------- */
+.mypage-box {
+  @apply bg-card text-card-foreground border border-border rounded-lg shadow-xs;
+  padding: 1rem;
+}
+.mypage-box h3 {
+  @apply mt-0;
+}
+
+/* ---------- 添付ファイル / Wiki 補助 ---------- */
+div.attachments span.author,
+.wiki-update-info,
+div.wiki ul.toc > li:first-child,
+.wiki h6 {
+  @apply text-muted-foreground;
+}
+.attachments_fields input.filename,
+#existing-attachments .filename {
+  @apply text-foreground bg-transparent shadow-none;
+}
+div.thumbnail {
+  @apply bg-card border border-border rounded-md;
+}
+div.wiki ul.toc {
+  @apply bg-muted/40 border border-border rounded-lg;
+}
+div.wiki a.new {
+  @apply text-destructive;
+}
+
+/* ---------- エディタ（jstoolbar） ----------
+ * jstoolbar.css はテーマより後に読み込まれ、forms.css のボタン指定もあるので詳細度を上げる
+ */
+div.jstElements button[type="button"] {
+  @apply bg-transparent border-transparent rounded-sm shadow-none;
+}
+div.jstElements button[type="button"]:hover {
+  @apply bg-accent border-transparent;
+}
+html.dark div.jstElements button[type="button"] {
+  /* ツールバーの SVG アイコンは黒固定なので反転させる（背景は透明のまま） */
+  filter: invert(1);
+}
+html.dark div.jstElements button[type="button"]:hover {
+  /* 反転後に accent 色になるよう、反転前の色を指定する */
+  background-color: oklch(0.731 0 0);
+}
+.wiki-preview {
+  @apply bg-background border border-border rounded-md;
+}
+#content .jstTabs.tabs ul li a {
+  @apply border-0;
+}
+
+/* ---------- コンテキストメニュー（context_menu.css はテーマより後に読み込まれるので div# で詳細度を上げる） ---------- */
+div#context-menu ul {
+  @apply bg-popover border border-border rounded-md shadow-md;
+  padding: 0.25rem;
+}
+div#context-menu li {
+  @apply border-0 rounded-sm;
+}
+div#context-menu a {
+  @apply text-popover-foreground;
+}
+div#context-menu li:hover,
+div#context-menu li.folder:hover,
+div#context-menu li > a:hover {
+  @apply bg-accent text-accent-foreground rounded-sm border-0;
+}
+div#context-menu a.disabled, div#context-menu a.disabled:hover {
+  @apply text-muted-foreground;
+}
+div#context-menu li a.icon-checked svg {
+  stroke: currentColor;
+}
+
+/* ---------- モーダル / jQuery UI（日付ピッカー・ダイアログ・オートコンプリート） ---------- */
+div.modal,
+.ui-dialog,
+.ui-widget.ui-widget-content {
+  @apply bg-popover text-popover-foreground border border-border rounded-lg shadow-lg;
+}
+.ui-widget,
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+  font-family: var(--fonts-main);
+}
+.ui-widget-content {
+  @apply bg-popover text-popover-foreground border-border;
+}
+.ui-widget-content a {
+  @apply text-popover-foreground;
+}
+.ui-widget-header {
+  @apply bg-transparent text-foreground border-0 font-semibold;
+}
+.ui-dialog .ui-dialog-titlebar {
+  @apply border-b border-border rounded-none;
+}
+.ui-widget-overlay {
+  background: oklch(0 0 0);
+  opacity: 0.5;
+}
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button {
+  @apply bg-background text-foreground border border-border rounded-sm;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-button:hover {
+  @apply bg-accent text-accent-foreground border-border;
+}
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active {
+  @apply bg-primary text-primary-foreground border-primary;
+}
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+  @apply bg-accent text-accent-foreground border-ring;
+}
+.ui-datepicker {
+  padding: 0.5rem;
+}
+.ui-datepicker th {
+  @apply text-muted-foreground font-normal text-xs;
+}
+/* shadcn の Calendar 風: セルは枠なし、選択日は primary、今日は accent */
+.ui-datepicker .ui-datepicker-calendar td {
+  padding: 1px;
+}
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-default,
+.ui-datepicker .ui-datepicker-calendar td span.ui-state-default {
+  @apply flex items-center justify-center bg-transparent text-foreground border-0 rounded-md text-sm;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+}
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-hover {
+  @apply bg-accent text-accent-foreground;
+}
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-highlight {
+  @apply bg-accent text-accent-foreground font-semibold;
+}
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-active {
+  @apply bg-primary text-primary-foreground;
+}
+.ui-datepicker .ui-datepicker-calendar td.ui-datepicker-other-month a.ui-state-default {
+  @apply text-muted-foreground opacity-60;
+}
+.ui-datepicker .ui-datepicker-calendar td.ui-datepicker-week-col {
+  @apply text-muted-foreground text-xs text-center;
+}
+.ui-datepicker .ui-datepicker-header {
+  @apply pb-2;
+}
+.ui-datepicker .ui-datepicker-title select {
+  height: 1.75rem;
+  @apply text-sm;
+}
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next {
+  @apply rounded-md border border-border bg-background;
+  top: 0.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+.ui-datepicker .ui-datepicker-prev { left: 0.25rem; }
+.ui-datepicker .ui-datepicker-next { right: 0.25rem; }
+.ui-datepicker .ui-datepicker-prev span,
+.ui-datepicker .ui-datepicker-next span {
+  @apply hidden;
+}
+/* jQuery UI の画像アイコンの代わりに CSS で矢印を描く */
+.ui-datepicker .ui-datepicker-prev::before,
+.ui-datepicker .ui-datepicker-next::before {
+  content: "";
+  @apply absolute border-foreground;
+  top: 50%;
+  left: 50%;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-width: 0 0 2px 2px;
+  border-style: solid;
+}
+.ui-datepicker .ui-datepicker-prev::before {
+  transform: translate(-30%, -50%) rotate(45deg);
+}
+.ui-datepicker .ui-datepicker-next::before {
+  transform: translate(-70%, -50%) rotate(-135deg);
+}
+.ui-datepicker .ui-datepicker-prev-hover,
+.ui-datepicker .ui-datepicker-next-hover {
+  @apply bg-accent;
+}
+.ui-datepicker .ui-datepicker-buttonpane {
+  @apply border-t border-border mt-2 pt-2 bg-transparent;
+}
+.ui-datepicker .ui-datepicker-buttonpane button {
+  @apply text-sm m-0 shadow-none;
+  height: 1.75rem;
+  padding: 0 0.625rem;
+  opacity: 1;
+}
+html.dark .ui-icon,
+html.dark .ui-widget-content .ui-icon,
+html.dark .ui-widget-header .ui-icon {
+  filter: invert(1);
+}
+.ui-autocomplete.ui-menu {
+  padding: 0.25rem;
+}
+.ui-menu .ui-menu-item-wrapper {
+  @apply rounded-sm border-0;
+  padding: 0.25rem 0.5rem;
+}
+.ui-menu .ui-menu-item-wrapper.ui-state-active {
+  @apply bg-accent text-accent-foreground m-0 border-0;
+}
+
+/* メンション候補（tribute） */
+.tribute-container ul {
+  @apply bg-popover border border-border rounded-md shadow-md;
+}
+.tribute-container li {
+  @apply text-popover-foreground;
+}
+.tribute-container li.highlight {
+  @apply bg-accent text-accent-foreground;
+}
+
+/* ---------- 並べ替え・ドラッグ ---------- */
+tr.ui-sortable-helper {
+  @apply bg-card border border-border shadow-md;
+}
+
+/* ---------- ニュース ---------- */
+article.news-article {
+  @apply bg-card border border-border rounded-lg mb-4;
+  padding: 1rem 1.25rem;
+}
+article.news-article h3 {
+  @apply flex items-center gap-2 mt-0 mb-1;
+}
+article.news-article p.author {
+  @apply text-muted-foreground text-xs mt-0;
+}
+article.news-article .wiki > :last-child {
+  @apply mb-0;
+}
+
+/* ---------- リポジトリ / 差分（scm.css はテーマより後に読み込まれるので #content を付ける） ---------- */
+#content table.filecontent {
+  @apply bg-card border border-border rounded-lg overflow-hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+#content table.filecontent tbody {
+  font-family: var(--fonts-mono);
+  font-size: 0.8125rem;
+}
+#content table.filecontent th {
+  @apply bg-muted/50 border-0;
+}
+#content table.filecontent th.filename {
+  @apply bg-muted text-foreground font-semibold border-0 border-b border-border text-sm;
+  padding: 0.5rem 0.75rem;
+}
+#content table.filecontent th.line-num {
+  @apply bg-muted/40 text-muted-foreground border-0 border-r border-border;
+  min-width: 2.5rem;
+  padding: 0 0.5rem;
+}
+#content table.filecontent td.line-code {
+  padding: 0 0 0 0.75rem;
+}
+#content table.filecontent tr.spacing td,
+#content table.filecontent tr.spacing th {
+  @apply bg-muted text-muted-foreground;
+}
+#content table.filecontent tr:target th.line-num {
+  @apply bg-accent text-foreground;
+}
+#content table.filecontent tr:target td.line-code {
+  background: color-mix(in oklab, var(--info) 14%, transparent);
+}
+.diff_out {
+  background: color-mix(in oklab, var(--destructive) 12%, transparent);
+}
+.diff_out span {
+  background: color-mix(in oklab, var(--destructive) 28%, transparent);
+}
+.diff_in {
+  background: color-mix(in oklab, var(--success) 12%, transparent);
+}
+.diff_in span {
+  background: color-mix(in oklab, var(--success) 28%, transparent);
+}
+#content table.annotate tr.bloc-change {
+  @apply border-t border-border;
+}
+#content table.annotate td.revision,
+#content table.annotate td.author,
+#content table.annotate td.previous {
+  @apply bg-muted/40 border-r border-border;
+}
+table.revision-info td,
+div.changeset-changes {
+  @apply text-muted-foreground;
+}
+
+/* ---------- その他: 本体で背景が白固定になっている部品 ---------- */
+div#sticky-issue-header {
+  @apply bg-background/95 border-b border-border;
+  backdrop-filter: blur(8px);
+}
+.check_box_group {
+  @apply bg-background border border-input rounded-md;
+  padding: 0.375rem 0.5rem;
+}
+div.pre-wrapper a.copy-pre-content-link {
+  @apply bg-background border border-border rounded-md text-muted-foreground;
+}
+div#issue-changesets {
+  @apply bg-transparent;
+}
+#issue-changesets div.changeset {
+  @apply border-b border-border;
+  padding: 0.5rem 0.25rem;
+}
+.table-generator td {
+  @apply bg-background border-border;
+}
+.sample-data {
+  @apply bg-card border-border;
+}
+.sample-data td, .sample-data th {
+  @apply border-border;
+}
+span.required {
+  @apply text-destructive;
+}

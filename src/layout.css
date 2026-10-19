@@ -1,0 +1,190 @@
+/* トップメニュー / ヘッダー / メインメニュー / サイドバー / フッター */
+
+/* ---------- top-menu ---------- */
+#top-menu {
+  @apply bg-background text-muted-foreground border-b border-border px-4 py-2;
+  font-size: 0.8125rem;
+}
+#top-menu li a {
+  margin-right: 0.75rem;
+}
+#top-menu a {
+  @apply text-muted-foreground font-medium no-underline;
+}
+#top-menu a:hover {
+  @apply text-foreground no-underline;
+}
+#top-menu #loggedas {
+  @apply text-muted-foreground;
+}
+#top-menu #loggedas a {
+  @apply text-foreground;
+}
+
+/* ---------- header ---------- */
+#header {
+  @apply bg-background text-foreground border-b border-border;
+  background-image: none;
+  padding: 0.75rem 1rem 2.75rem 1rem;
+}
+/* メインメニューが無い画面（管理画面・マイページなど） */
+body:not(.has-main-menu) #header {
+  min-height: 0;
+  padding-bottom: 0.75rem;
+}
+#header a {
+  @apply text-foreground;
+}
+#header h1 {
+  @apply text-xl font-semibold tracking-tight;
+}
+#header h1 .breadcrumbs {
+  @apply text-xs text-muted-foreground font-normal mb-1;
+}
+#header h1 .breadcrumbs a {
+  @apply text-muted-foreground;
+}
+
+#quick-search {
+  @apply text-muted-foreground;
+}
+#quick-search a {
+  @apply text-muted-foreground;
+}
+#quick-search input#q {
+  @apply w-48;
+}
+
+/* project-jump（プロジェクト切り替えのドロップダウン） */
+#project-jump .drdn-trigger {
+  @apply bg-background border border-input rounded-md text-foreground shadow-xs;
+}
+
+/* ---------- main-menu（underline tabs 風） ---------- */
+#main-menu {
+  left: 1rem;
+}
+#main-menu li a {
+  @apply bg-transparent text-muted-foreground font-medium rounded-none border-b-2 border-transparent px-3 py-2 text-sm;
+}
+#main-menu li a:hover {
+  @apply bg-transparent text-foreground no-underline;
+}
+#main-menu li a.selected,
+#main-menu li a.selected:hover {
+  @apply bg-transparent text-foreground font-semibold border-b-2 border-primary;
+}
+#main-menu li a.new-object {
+  @apply bg-transparent text-muted-foreground;
+}
+#main-menu .menu-children {
+  @apply bg-popover border border-border rounded-md shadow-md p-1;
+}
+#main-menu .menu-children li a {
+  @apply bg-popover text-popover-foreground rounded-sm border-0 px-2 py-1.5;
+}
+#main-menu .menu-children li a:hover {
+  @apply bg-accent text-accent-foreground;
+}
+#main-menu .tabs-buttons button {
+  @apply bg-background;
+}
+
+/* ---------- main / content ---------- */
+#main {
+  @apply bg-background;
+}
+#content {
+  @apply bg-background;
+  padding: 1.25rem 1.5rem;
+}
+
+/* ---------- sidebar ---------- */
+#sidebar {
+  /* サイドバーは背景が muted 寄りなので、accent だとライトモードで hover が見えない。
+   * 文字色を薄く重ねた色を使う */
+  --sidebar-accent: color-mix(in oklab, var(--foreground) 7%, transparent);
+  @apply bg-muted/40 border-l border-border text-sm;
+  padding: 1.25rem 1rem;
+}
+#sidebar h3 {
+  @apply text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2;
+}
+#sidebar ul li {
+  @apply my-0.5;
+}
+#sidebar a {
+  @apply text-foreground;
+}
+#sidebar a:hover {
+  @apply no-underline text-foreground;
+}
+/* リンクのリスト（カスタムクエリ・バージョン・Wiki など）はナビゲーション風に。
+ * ウォッチャー一覧はアバター・名前・削除ボタンが横並びなので除外する */
+#sidebar ul:not(.watchers) > li > a {
+  @apply block rounded-md px-2 py-1;
+}
+#sidebar ul:not(.watchers) > li > a:hover {
+  background-color: var(--sidebar-accent);
+}
+#sidebar ul.watchers li {
+  @apply flex items-center gap-1.5 py-0.5;
+}
+#sidebar ul.watchers .avatar {
+  @apply m-0;
+}
+#sidebar ul.watchers a.delete {
+  @apply ml-auto text-muted-foreground;
+}
+#sidebar a.selected {
+  background-color: var(--sidebar-accent);
+  @apply text-foreground font-medium rounded-md m-0;
+  padding: 0.25rem 0.5rem;
+  line-height: inherit;
+}
+#sidebar a.selected svg.icon-svg {
+  stroke: currentColor !important;
+}
+#sidebar hr {
+  @apply bg-border my-3;
+}
+/* サイドバーの開閉ボタン（shadcn の Button: ghost / icon-sm 風）
+ * 本体はサイドバーの padding-left 20px を前提に margin-left: -20px で横幅いっぱいの帯にしているので、
+ * 小さいアイコンボタンに作り直す */
+#sidebar-switch-panel {
+  margin: 0 0 0.75rem -0.375rem;
+  padding: 0;
+  width: auto;
+}
+#sidebar-switch-button {
+  @apply inline-flex items-center justify-center rounded-md text-muted-foreground;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+}
+#sidebar-switch-button:hover {
+  background-color: var(--sidebar-accent);
+  @apply text-foreground;
+}
+#sidebar-switch-button svg {
+  stroke: currentColor;
+  width: 1rem;
+  height: 1rem;
+}
+/* 閉じた状態: ボタンだけが収まる幅にする */
+#main.collapsedsidebar #sidebar {
+  /* 本体は width: 0 にしているので、ボタンの幅を確保する */
+  width: 1.75rem;
+  padding: 1.25rem 0.375rem;
+}
+#main.collapsedsidebar #sidebar-switch-panel {
+  margin-left: 0;
+}
+
+/* ---------- footer ---------- */
+#footer {
+  @apply bg-background border-t border-border text-muted-foreground text-xs py-3;
+}
+#footer a {
+  @apply text-muted-foreground;
+}

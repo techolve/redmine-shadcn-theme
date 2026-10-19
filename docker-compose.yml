@@ -1,0 +1,20 @@
+# ローカル確認用の Redmine（SQLite）
+# テーマは themes/shadcn としてマウントする（node_modules などは含めない）
+services:
+  redmine:
+    image: redmine:6
+    ports:
+      - "3000:3000"
+    environment:
+      REDMINE_SECRET_KEY_BASE: &secret local-dev-secret-key-base-for-theme-development
+      SECRET_KEY_BASE: *secret
+    volumes:
+      - redmine-files:/usr/src/redmine/files
+      - redmine-sqlite:/usr/src/redmine/sqlite
+      - ./stylesheets:/usr/src/redmine/themes/shadcn/stylesheets:ro
+      - ./javascripts:/usr/src/redmine/themes/shadcn/javascripts:ro
+      - ./images:/usr/src/redmine/themes/shadcn/images:ro
+
+volumes:
+  redmine-files:
+  redmine-sqlite:

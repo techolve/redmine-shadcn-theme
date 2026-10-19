@@ -1,0 +1,25 @@
+/* Redmine shadcn theme
+ * shadcn/ui inspired theme for Redmine 6 (unofficial)
+ * License: MIT
+ *
+ * src/ 配下を編集して `npm run build` で stylesheets/application.css を生成する
+ */
+
+/* Redmine 本体の CSS（必ず先頭） */
+@import url(/application.css);
+
+/* Tailwind: preflight は Redmine を壊すので読み込まない。@apply 用に theme と utilities だけ */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+@import "./tokens.css";
+@import "./base.css";
+@import "./icons.css";
+@import "./layout.css";
+@import "./forms.css";
+@import "./components.css";
+@import "./issues.css";
+@import "./views.css";
+@import "./gantt.css";
+@import "./calendar.css";
+@import "./dark.css";

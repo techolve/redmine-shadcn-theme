@@ -1,0 +1,59 @@
+/* ダークモード用の追加調整
+ * トークンだけで切り替わらない、Redmine 本体の固定色を上書きする
+ */
+html.dark img.gravatar {
+  background-color: var(--muted);
+}
+
+/* 本体の PNG アイコン（SVG 化されていない箇所）を見えるようにする */
+html.dark .icon:not(:has(svg)),
+html.dark #context-menu li a.submenu:not(:has(+ span)) {
+  filter: invert(0.85) hue-rotate(180deg);
+}
+
+/* シンタックスハイライト（GitHub Dark 風） */
+html.dark .syntaxhl .c, html.dark .syntaxhl .ch, html.dark .syntaxhl .cm,
+html.dark .syntaxhl .cpf, html.dark .syntaxhl .c1, html.dark .syntaxhl .go,
+html.dark .syntaxhl .w { color: #8b949e; }
+html.dark .syntaxhl .cp, html.dark .syntaxhl .cs { color: #ff7b72; }
+html.dark .syntaxhl .k, html.dark .syntaxhl .kc, html.dark .syntaxhl .kd,
+html.dark .syntaxhl .kn, html.dark .syntaxhl .kp, html.dark .syntaxhl .kr,
+html.dark .syntaxhl .ow { color: #ff7b72; }
+html.dark .syntaxhl .kt, html.dark .syntaxhl .nc, html.dark .syntaxhl .nn,
+html.dark .syntaxhl .no, html.dark .syntaxhl .ne { color: #ffa657; }
+html.dark .syntaxhl .o, html.dark .syntaxhl .nd { color: #e6edf3; }
+html.dark .syntaxhl .m, html.dark .syntaxhl .mb, html.dark .syntaxhl .mf,
+html.dark .syntaxhl .mh, html.dark .syntaxhl .mi, html.dark .syntaxhl .mo,
+html.dark .syntaxhl .il, html.dark .syntaxhl .na, html.dark .syntaxhl .nb,
+html.dark .syntaxhl .bp, html.dark .syntaxhl .vc, html.dark .syntaxhl .vi,
+html.dark .syntaxhl .vg { color: #79c0ff; }
+html.dark .syntaxhl .nf, html.dark .syntaxhl .fm, html.dark .syntaxhl .nl { color: #d2a8ff; }
+html.dark .syntaxhl .nt, html.dark .syntaxhl .gi { color: #7ee787; }
+html.dark .syntaxhl .nv, html.dark .syntaxhl .vm, html.dark .syntaxhl .ni { color: #ffa657; }
+html.dark .syntaxhl .s, html.dark .syntaxhl .sa, html.dark .syntaxhl .sb,
+html.dark .syntaxhl .sc, html.dark .syntaxhl .dl, html.dark .syntaxhl .sd,
+html.dark .syntaxhl .s2, html.dark .syntaxhl .se, html.dark .syntaxhl .sh,
+html.dark .syntaxhl .sx, html.dark .syntaxhl .sr, html.dark .syntaxhl .s1,
+html.dark .syntaxhl .ss { color: #a5d6ff; background-color: transparent; }
+html.dark .syntaxhl .si { background-color: transparent; }
+html.dark .syntaxhl .gd, html.dark .syntaxhl .gr, html.dark .syntaxhl .err {
+  color: #ffa198; background-color: transparent;
+}
+html.dark .syntaxhl .gh, html.dark .syntaxhl .gu, html.dark .syntaxhl .gt { color: #79c0ff; }
+html.dark .syntaxhl .gp { color: #8b949e; }
+
+/* ダークモード切り替えボタン（theme.js が #top-menu に追加する） */
+#shadcn-theme-toggle {
+  @apply inline-flex items-center justify-center rounded-md border-0 bg-transparent shadow-none text-muted-foreground cursor-pointer p-0 align-middle;
+  width: 1.75rem;
+  height: 1.75rem;
+  float: right;
+  margin: -0.25rem 0 -0.25rem 0.5rem;
+}
+#shadcn-theme-toggle:hover {
+  @apply bg-accent text-foreground;
+}
+#shadcn-theme-toggle svg {
+  width: 1rem;
+  height: 1rem;
+}
