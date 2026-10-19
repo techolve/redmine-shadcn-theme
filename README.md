@@ -8,7 +8,27 @@
 - チケット・ガントチャート・カレンダー・作業時間・ロードマップ・管理画面などに対応
 - 確認バージョン: Redmine 6.1.5
 
+![チケット一覧](.github/screenshots/issues-light.png#gh-light-mode-only)
+![チケット一覧](.github/screenshots/issues-dark.png#gh-dark-mode-only)
+
+## スクリーンショット
+
+| | ライト | ダーク |
+|---|---|---|
+| チケット | ![](.github/screenshots/issue-light.png) | ![](.github/screenshots/issue-dark.png) |
+| ガントチャート | ![](.github/screenshots/gantt-light.png) | ![](.github/screenshots/gantt-dark.png) |
+| カレンダー | ![](.github/screenshots/calendar-light.png) | ![](.github/screenshots/calendar-dark.png) |
+
 ## インストール
+
+[Releases](https://github.com/techolve/redmine-shadcn-theme/releases) から `redmine-shadcn-theme-v*.zip` をダウンロードして、Redmine の `themes/` に展開する（`themes/shadcn/` ができる）。
+
+```sh
+cd /path/to/redmine/themes
+unzip redmine-shadcn-theme-v0.1.0.zip
+```
+
+または git で clone する。
 
 ```sh
 cd /path/to/redmine/themes
@@ -24,6 +44,7 @@ npm install
 docker compose up -d                       # http://localhost:3000
 docker compose exec -T redmine bundle exec rails runner - < src/tools/seed.rb   # サンプルデータ（admin / admin1234）
 npm run reload                             # アイコンと CSS をビルドして Redmine を再起動
+npm run package                            # Release 用の zip を .dist/ に作る
 ```
 
 Redmine 6 はアセットを起動時に処理するため、CSS を変更したら再起動が必要です（`npm run reload`）。
@@ -47,6 +68,7 @@ src/                  ソース一式（Redmine は src/ を配信しない）
   dark.css            ダークモードの追加調整・シンタックスハイライト・切り替えボタン
   tools/build-icons.mjs  Redmine のアイコン名 → Lucide の対応表。images/icons.svg を生成
   tools/seed.rb       ローカル確認用のサンプルデータ
+  tools/package.sh    Release 用の zip を作る
 stylesheets/          ビルド結果（Redmine が読み込む。コミットする）
 images/icons.svg      ビルド結果（Lucide のアイコンスプライト。コミットする）
 javascripts/theme.js  ダークモード切り替え・ガントの行の高さと横幅の調整
