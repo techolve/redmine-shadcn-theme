@@ -25,7 +25,7 @@
 
 ```sh
 cd /path/to/redmine/themes
-unzip redmine-shadcn-theme-v0.1.0.zip
+unzip redmine-shadcn-theme-v0.2.0.zip
 ```
 
 または git で clone する。
