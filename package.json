@@ -1,6 +1,6 @@
 {
   "name": "redmine-shadcn-theme",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "description": "shadcn/ui inspired theme for Redmine 6",
   "author": "Techolve",
