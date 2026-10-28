@@ -94,12 +94,23 @@ html.dark #content table.gantt-table {
 #content .gantt_subjects {
   font-size: 0.8125rem;
 }
-/* 左右に余白を入れる。幅はインライン指定なので padding を含めて収め、はみ出す題名は省略する */
+/* 左右に余白を入れて、はみ出す題名は「…」で省略する。
+ * Redmine の JS は幅を「列の幅 - 行の左位置」でインライン指定するので、そのままだと余白のぶん列からはみ出し、
+ * 「…」が列の外で切れてしまう。幅は auto にして、右端を right で決める（列の幅を変えても追従する） */
 #content .gantt_subjects form > div {
+  width: auto !important;
+  right: 0.75rem;
   margin-left: 0.5rem;
-  padding-right: 1rem;
-  box-sizing: border-box;
   text-overflow: ellipsis;
+}
+/* 担当者のいない行は中身が span.icon（inline-flex）で包まれていて、その中の文字は「…」の対象にならない。
+ * ここでは普通の inline に戻す */
+#content .gantt_subjects form > div > span.icon {
+  display: inline;
+}
+#content .gantt_subjects form > div > span.icon > svg.icon-svg {
+  vertical-align: middle;
+  margin-right: 0.125rem;
 }
 #content .gantt_selected_column_content > div {
   padding-left: 0.5rem;

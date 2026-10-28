@@ -1321,6 +1321,16 @@ div#activity dt {
 div#activity dt .avatar {
   margin-right: 0.5rem;
 }
+.block-receiver {
+  border-radius: var(--radius);
+  border-color: transparent;
+  padding: 0;
+}
+.dragging .block-receiver {
+  border-color: var(--border);
+  border-style: dashed;
+  padding: 0.5rem;
+}
 .mypage-box {
   border-radius: var(--radius);
   border-style: var(--tw-border-style);
@@ -1934,10 +1944,17 @@ html.dark #content table.gantt-table {
   font-size: 0.8125rem;
 }
 #content .gantt_subjects form > div {
+  width: auto !important;
+  right: 0.75rem;
   margin-left: 0.5rem;
-  padding-right: 1rem;
-  box-sizing: border-box;
   text-overflow: ellipsis;
+}
+#content .gantt_subjects form > div > span.icon {
+  display: inline;
+}
+#content .gantt_subjects form > div > span.icon > svg.icon-svg {
+  vertical-align: middle;
+  margin-right: 0.125rem;
 }
 #content .gantt_selected_column_content > div {
   padding-left: 0.5rem;

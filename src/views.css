@@ -203,6 +203,17 @@ div#activity dt .avatar {
 }
 
 /* ---------- マイページ ---------- */
+/* ブロックの置き場所（ドラッグ＆ドロップ用）。本体は白い点線の枠があり、ダークモードで浮く（#1）。
+ * 普段は枠を出さず、ブロックをドラッグしている間だけ点線で置き場所を示す */
+.block-receiver {
+  @apply border-transparent rounded-lg;
+  padding: 0;
+}
+.dragging .block-receiver {
+  @apply border-border;
+  border-style: dashed;
+  padding: 0.5rem;
+}
 .mypage-box {
   @apply bg-card text-card-foreground border border-border rounded-lg shadow-xs;
   padding: 1rem;
