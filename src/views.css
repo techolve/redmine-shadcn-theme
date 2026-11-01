@@ -7,6 +7,8 @@
 table.list:not(.odd-even) tbody tr:nth-child(odd),
 table.list:not(.odd-even) tbody tr:nth-child(even),
 .odd, .even,
+/* Redmine 7 は .box 内の偶数行を白にする詳細度の高いルールがある */
+.box table.list:not(.odd-even) tbody tr:nth-child(even), .box .even,
 #issue-changesets div.changeset:nth-child(odd),
 #issue-changesets div.changeset:nth-child(even) {
   @apply bg-transparent;
@@ -14,6 +16,7 @@ table.list:not(.odd-even) tbody tr:nth-child(even),
 table.list:not(.odd-even) tbody tr:nth-child(odd):hover,
 table.list:not(.odd-even) tbody tr:nth-child(even):hover,
 .odd:hover, .even:hover,
+.box table.list:not(.odd-even) tbody tr:nth-child(even):hover, .box .even:hover,
 #issue-changesets div.changeset:nth-child(even):hover {
   @apply bg-muted/50;
 }

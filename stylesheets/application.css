@@ -1073,10 +1073,10 @@ div.issue hr {
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
 }
-table.list:not(.odd-even) tbody tr:nth-child(odd), table.list:not(.odd-even) tbody tr:nth-child(even), .odd, .even, #issue-changesets div.changeset:nth-child(odd), #issue-changesets div.changeset:nth-child(even) {
+table.list:not(.odd-even) tbody tr:nth-child(odd), table.list:not(.odd-even) tbody tr:nth-child(even), .odd, .even, .box table.list:not(.odd-even) tbody tr:nth-child(even), .box .even, #issue-changesets div.changeset:nth-child(odd), #issue-changesets div.changeset:nth-child(even) {
   background-color: transparent;
 }
-table.list:not(.odd-even) tbody tr:nth-child(odd):hover, table.list:not(.odd-even) tbody tr:nth-child(even):hover, .odd:hover, .even:hover, #issue-changesets div.changeset:nth-child(even):hover {
+table.list:not(.odd-even) tbody tr:nth-child(odd):hover, table.list:not(.odd-even) tbody tr:nth-child(even):hover, .odd:hover, .even:hover, .box table.list:not(.odd-even) tbody tr:nth-child(even):hover, .box .even:hover, #issue-changesets div.changeset:nth-child(even):hover {
   background-color: var(--muted);
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--muted) 50%, transparent);
