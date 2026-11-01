@@ -25,7 +25,7 @@ Download `redmine-shadcn-theme-v*.zip` from [Releases](https://github.com/techol
 
 ```sh
 cd /path/to/redmine/themes
-unzip redmine-shadcn-theme-v0.2.2.zip
+unzip redmine-shadcn-theme-v0.2.3.zip
 ```
 
 Or clone the repository:
